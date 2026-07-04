@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  font-size: 15px;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+/* Compact table rows on desktop */
+@media (min-width: 768px) {
+  .table td, .table th { padding: 0.45rem 0.75rem; }
+}
+
+/* Card styling */
+.card { border-radius: 0.5rem; }
