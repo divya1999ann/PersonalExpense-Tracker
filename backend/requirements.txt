@@ -4,3 +4,6 @@ django-cors-headers==4.9.0
 psycopg2-binary==2.9.12
 python-dotenv==1.2.2
 splitwise==3.0.0
+gunicorn==23.0.0
+whitenoise==6.9.0
+dj-database-url==2.3.0
