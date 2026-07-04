@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const api = axios.create({ baseURL: (import.meta.env.VITE_API_URL || '') + '/api' })
+const api = axios.create({ baseURL: 'https://merakarcha-api.fly.dev/api' })
 
 export const getExpenses = (params) => api.get('/expenses/', { params })
 export const createExpense = (data) => api.post('/expenses/', data)
