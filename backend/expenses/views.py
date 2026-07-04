@@ -50,6 +50,16 @@ class ExpenseViewSet(viewsets.ModelViewSet):
         )
         return Response(list(rows))
 
+    @action(detail=False, methods=["get"], url_path="category-totals")
+    def category_totals(self, request):
+        qs = self.get_queryset()
+        rows = (
+            qs.values("category")
+            .annotate(total=Sum("amount"))
+            .order_by("-total")
+        )
+        return Response(list(rows))
+
     @action(detail=False, methods=["get"], url_path="meta")
     def meta(self, request):
         return Response({

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { getExpenses, getMeta, deleteExpense } from '../api/client'
 
@@ -21,6 +21,20 @@ export default function Dashboard({ onFlash, syncCount = 0 }) {
   const [count, setCount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [filtersOpen, setFiltersOpen] = useState(true)
+
+  const monthOptions = useMemo(() => {
+    const months = []
+    const start = new Date(2025, 7, 1) // Aug 2025
+    const now = new Date()
+    let cur = new Date(now.getFullYear(), now.getMonth(), 1)
+    while (cur >= start) {
+      const y = cur.getFullYear()
+      const m = String(cur.getMonth() + 1).padStart(2, '0')
+      months.push(`${y}-${m}`)
+      cur = new Date(cur.getFullYear(), cur.getMonth() - 1, 1)
+    }
+    return months
+  }, [])
 
   const filters = {
     date_from: searchParams.get('date_from') || '',
@@ -102,11 +116,16 @@ export default function Dashboard({ onFlash, syncCount = 0 }) {
               {/* Month picker */}
               <div className="col-6 col-md-2">
                 <label className="form-label small mb-1">Month</label>
-                <input
-                  type="month" name="month" className="form-control form-control-sm"
-                  value={monthVal}
-                  onChange={e => { setMonthVal(e.target.value); setDateFrom(''); setDateTo('') }}
-                />
+                <select name="month" className="form-select form-select-sm"
+                        value={monthVal}
+                        onChange={e => { setMonthVal(e.target.value); setDateFrom(''); setDateTo('') }}>
+                  <option value="">All months</option>
+                  {monthOptions.map(m => (
+                    <option key={m} value={m}>
+                      {new Date(m + '-01').toLocaleDateString('en-IE', { month: 'long', year: 'numeric' })}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="col-auto d-flex align-items-end pb-1 text-muted small">or</div>
