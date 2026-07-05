@@ -36,14 +36,27 @@ export default function Navbar({ onSyncResult }) {
           <i className="bi bi-wallet2 me-1" />
           My Expenses
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navMenu"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
+
+        <div className="d-flex align-items-center gap-2 order-md-2">
+          <Link className="btn btn-sm btn-outline-light" to="/add">
+            <i className="bi bi-plus-lg" />
+            <span className="d-none d-sm-inline ms-1">Add</span>
+          </Link>
+          <button className="btn btn-sm btn-outline-info" onClick={handleSync} disabled={syncing}>
+            {syncing
+              ? <><span className="spinner-border spinner-border-sm" role="status" /><span className="d-none d-sm-inline ms-1">Syncing…</span></>
+              : <><i className="bi bi-arrow-repeat" /><span className="d-none d-sm-inline ms-1">Sync Splitwise</span></>}
+          </button>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navMenu"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+        </div>
+
         <div className="collapse navbar-collapse" id="navMenu">
           <ul className="navbar-nav ms-auto align-items-md-center gap-2">
             <li className="nav-item">
@@ -55,18 +68,6 @@ export default function Navbar({ onSyncResult }) {
               <Link className="nav-link text-white" to="/monthly">
                 <i className="bi bi-bar-chart-line me-1" />Summary
               </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="btn btn-sm btn-outline-light" to="/add">
-                <i className="bi bi-plus-lg me-1" />Add
-              </Link>
-            </li>
-            <li className="nav-item">
-              <button className="btn btn-sm btn-outline-info" onClick={handleSync} disabled={syncing}>
-                {syncing
-                  ? <><span className="spinner-border spinner-border-sm me-1" role="status" />Syncing…</>
-                  : <><i className="bi bi-arrow-repeat me-1" />Sync Splitwise</>}
-              </button>
             </li>
             <li className="nav-item">
               <button className="btn btn-sm btn-outline-secondary" onClick={toggleTheme} title="Toggle theme">
